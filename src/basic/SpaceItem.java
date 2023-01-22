@@ -3,13 +3,13 @@ package basic;
 public class SpaceItem {
     String entity;
     String conCode;
-    int year;
+    String year;
     int yearlyLaunches;
 
     public String getEntity() {
         return entity;
     }
-    public SpaceItem(String entity, String conCode, int year, int yearlyLaunches) {
+    public SpaceItem(String entity, String conCode, String year, int yearlyLaunches) {
         this.entity = entity;
         this.conCode = conCode;
         this.year = year;
@@ -24,10 +24,10 @@ public class SpaceItem {
     public void setConCode(String conCode) {
         this.conCode = conCode;
     }
-    public int getYear() {
+    public String getYear() {
         return year;
     }
-    public void setYear(int year) {
+    public void setYear(String year) {
         this.year = year;
     }
     public int getYearlyLaunches() {
