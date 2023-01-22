@@ -33,7 +33,7 @@ public class BarChartApp extends Application {
         yAxis = new NumberAxis("Units Sold", 0.0d, 3000.0d, 1000.0d);
         ObservableList<BarChart.Series> barChartData =
             FXCollections.observableArrayList(
-              new BarChart.Series("Apples", FXCollections.observableArrayList(
+              new BarChart.Series("", FXCollections.observableArrayList(
                 new BarChart.Data(years[0], 567d),
                 new BarChart.Data(years[1], 1292d),
                 new BarChart.Data(years[2], 1292d))),

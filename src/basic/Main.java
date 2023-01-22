@@ -1,10 +1,11 @@
 package basic;
 
-import SpaceThing;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class Main {
     public static final String delimiter = ",";
@@ -12,7 +13,7 @@ public class Main {
     public void csvConvert() throws IOException {
         String country = "";
         int fileColCounter = 0;
-        HashMap<String, ArrayList<SpaceThing>> countrySpaceThings = new HashMap<String, ArrayList<SpaceThing>>();
+        HashMap<String, ArrayList<SpaceItem>> countrySpaceItems = new HashMap<String, ArrayList<SpaceItem>>();
 
         File file = new File("C:/Users/buyat/Downloads/objectsInSpace.csv");
         FileReader fr = new FileReader(file);
@@ -21,16 +22,19 @@ public class Main {
         String[] tempArr;
         while ((line = br.readLine()) != null) {
             if (fileColCounter == 0) {
+                fileColCounter++;
                 continue;
             }
-            
             tempArr = line.split(delimiter);
             country = tempArr[0];
-            countrySpaceThings.get("England");
-            for (String tempStr : tempArr) {
-                System.out.print(tempStr + " ");
-            }
-            System.out.println();
+            
+            ArrayList<SpaceItem> things = countrySpaceItems.get(country);
+            if (things == null) {
+                things = new ArrayList<SpaceItem>();
+            } 
+            //ArrayList<SpaceItem> createThing = new ArrayList<SpaceItem>();
+            things.add(new SpaceItem(country,tempArr[1], Integer.parseInt(tempArr[2]), Integer.parseInt(tempArr[3])));
+            countrySpaceItems.put(country, things);
 
         }
         br.close();

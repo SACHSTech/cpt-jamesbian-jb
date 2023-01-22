@@ -1,7 +1,6 @@
 package basic;
 
-
-public class SpaceThing {
+public class SpaceItem {
     String entity;
     String conCode;
     int year;
@@ -9,6 +8,12 @@ public class SpaceThing {
 
     public String getEntity() {
         return entity;
+    }
+    public SpaceItem(String entity, String conCode, int year, int yearlyLaunches) {
+        this.entity = entity;
+        this.conCode = conCode;
+        this.year = year;
+        this.yearlyLaunches = yearlyLaunches;
     }
     public void setEntity(String entity) {
         this.entity = entity;
