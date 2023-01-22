@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.CheckBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
  
  
@@ -45,6 +48,7 @@ public class BarChartApp extends Application {
             );
         chart = new BarChart(xAxis, yAxis, barChartData, 25.0d);
         return chart;
+
     }
  
     @Override public void start(Stage primaryStage) throws Exception {
