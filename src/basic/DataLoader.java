@@ -5,21 +5,23 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import charts.BarChartApp;
-
-public class Main {
+public class DataLoader {
     public static final String delimiter = ",";
+    ArrayList<String> yearList = new ArrayList<String>();
+    HashMap<String, ArrayList<SpaceItem>> countrySpaceItems = new HashMap<String, ArrayList<SpaceItem>>();
 
-    public Set<String> getYearSet() {
-        return yearSet;
+    public ArrayList<String> getYearList() {
+        return yearList;
     }
 
-    public void setYearSet(Set<String> yearSet) {
-        this.yearSet = yearSet;
+    public void setYearList(ArrayList<String> yearSet) {
+        this.yearList = yearSet;
     }
 
     public HashMap<String, ArrayList<SpaceItem>> getCountrySpaceItems() {
@@ -30,10 +32,8 @@ public class Main {
         this.countrySpaceItems = countrySpaceItems;
     }
 
-    Set<String> yearSet = new HashSet<String>();
-    HashMap<String, ArrayList<SpaceItem>> countrySpaceItems = new HashMap<String, ArrayList<SpaceItem>>();
-
     public void csvConvert() throws IOException {
+        Set<String> yearSet = new HashSet<String>();
         String country = "";
         int fileColCounter = 0;
         File file = new File("C:/Users/buyat/Downloads/objectsInSpace.csv");
@@ -58,20 +58,9 @@ public class Main {
             countrySpaceItems.put(country, things);
 
             yearSet.add(tempArr[2]);
-
         }
         br.close();
-    }
-
-    public void ensemble() {
-        BarChartApp app = new BarChartApp();
-        app.setCountrySpaceItems(countrySpaceItems);
-        app.setYears(yearSet);
-    }
-
-    public static void main(String[] args) throws IOException {
-        Main main = new Main();
-        main.csvConvert();
-        main.ensemble();
+        yearList = new ArrayList<String>(yearSet);
+        Collections.sort(yearList);
     }
 }
