@@ -12,11 +12,20 @@ import basic.SpaceItem;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
@@ -38,6 +47,7 @@ public class BarChartApp extends Application {
   HashMap<String, ArrayList<SpaceItem>> countrySpaceItems;
 
   public Parent createContent() throws IOException {
+    Group root = new Group();
     m.csvConvert();
     countrySpaceItems = m.getCountrySpaceItems();
     years = m.getYearList();
@@ -80,19 +90,36 @@ public class BarChartApp extends Application {
     // new BarChart.Data(arrYears[0], 1154),
     // new BarChart.Data(arrYears[1], 1927),
     // new BarChart.Data(arrYears[2], 2774))));
+
+    Menu assemble = new Menu("Options");
+    final MenuBar menuBar = new MenuBar();
     chart = new BarChart(xAxis, yAxis, barChartData, 25.0d);
-    return chart;
+    VBox vbox = new VBox();
+    HBox hbox = new HBox();
+
+    vbox.setMaxSize(900, 600);
+    chart.setMaxSize(880, 560);
+
+    hbox.setPadding(new Insets(10, 10, 10, 10));
+    vbox.setSpacing(10);
+    hbox.setSpacing(10);
+    CheckBox cb1 = new CheckBox("All Countries");
+    ChoiceBox dropdown = new ChoiceBox();
+
+    dropdown.getItems().addAll(m.getUniqueCountries());
+    // ObservableList list = root.getChildren();
+
+    hbox.getChildren().addAll(cb1, dropdown);
+    vbox.getChildren().addAll(hbox, chart);
+
+    return vbox;
 
   }
 
   @Override
   public void start(Stage primaryStage) throws Exception {
-    primaryStage.setScene(new Scene(createContent()));
+    primaryStage.setScene(new Scene(createContent(), 900, 600));
     primaryStage.show();
-  }
-
-  public void ensemble(String[] years) {
-
   }
 
   /**

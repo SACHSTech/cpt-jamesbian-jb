@@ -32,6 +32,13 @@ public class DataLoader {
         this.countrySpaceItems = countrySpaceItems;
     }
 
+    public ArrayList<String> getUniqueCountries() {
+        Set<String> countrySet = countrySpaceItems.keySet();
+        ArrayList<String> countryList = new ArrayList<String>(countrySet);
+        Collections.sort(countryList);
+        return countryList;
+    }
+
     public void csvConvert() throws IOException {
         Set<String> yearSet = new HashSet<String>();
         String country = "";
