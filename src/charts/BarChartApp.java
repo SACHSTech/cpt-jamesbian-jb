@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import basic.DataLoader;
 import basic.SpaceItem;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -21,9 +22,6 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -34,27 +32,17 @@ import javafx.stage.Stage;
  * discontinuous or discrete data.
  */
 public class BarChartApp extends Application {
-  DataLoader m = new DataLoader();
-
-  public void setCountrySpaceItems(HashMap<String, ArrayList<SpaceItem>> countrySpaceItems) {
-    this.countrySpaceItems = countrySpaceItems;
-  }
 
   private BarChart chart;
   private CategoryAxis xAxis;
   private NumberAxis yAxis;
   ArrayList<String> years;
   HashMap<String, ArrayList<SpaceItem>> countrySpaceItems;
+  DataLoader m = new DataLoader();
 
-  public Parent createContent() throws IOException {
-    Group root = new Group();
-    m.csvConvert();
-    countrySpaceItems = m.getCountrySpaceItems();
-    years = m.getYearList();
+  public void makeBar() {
     int n = this.years.size();
     String arrYears[] = new String[n];
-
-    // Copying contents of s to arr[]
     System.arraycopy(years.toArray(), 0, arrYears, 0, n);
 
     // String[] years = this.years.toArray();
@@ -75,25 +63,71 @@ public class BarChartApp extends Application {
       series.add(new BarChart.Series(country, FXCollections.observableArrayList(data)));
 
     }
-
     ObservableList<BarChart.Series> barChartData = FXCollections.observableArrayList(series);
-
-    // new BarChart.Series("", FXCollections.observableArrayList(
-    // new BarChart.Data(arrYears[0], 567d),
-    // new BarChart.Data(arrYears[1], 1292d),
-    // new BarChart.Data(arrYears[2], 1292d))),
-    // new BarChart.Series("Lemons", FXCollections.observableArrayList(
-    // new BarChart.Data(arrYears[0], 956),
-    // new BarChart.Data(arrYears[1], 1665),
-    // new BarChart.Data(arrYears[2], 2559))),
-    // new BarChart.Series("Oranges", FXCollections.observableArrayList(
-    // new BarChart.Data(arrYears[0], 1154),
-    // new BarChart.Data(arrYears[1], 1927),
-    // new BarChart.Data(arrYears[2], 2774))));
-
-    Menu assemble = new Menu("Options");
-    final MenuBar menuBar = new MenuBar();
     chart = new BarChart(xAxis, yAxis, barChartData, 25.0d);
+    
+  }
+
+  public void countrySelected(String countryName) {
+    System.out.println("country selected: " + countryName);
+
+  }
+
+  public void setCountrySpaceItems(HashMap<String, ArrayList<SpaceItem>> countrySpaceItems) {
+    this.countrySpaceItems = countrySpaceItems;
+  }
+
+  public Parent createContent() throws IOException {
+    Group root = new Group();
+    m.csvConvert();
+    countrySpaceItems = m.getCountrySpaceItems();
+    years = m.getYearList();
+    int n = this.years.size();
+    String arrYears[] = new String[n];
+
+    // Copying contents of s to arr[]
+    System.arraycopy(years.toArray(), 0, arrYears, 0, n);
+
+    makeBar();
+
+    // // String[] years = this.years.toArray();
+    // xAxis = new CategoryAxis();
+    // xAxis.setCategories(FXCollections.<String>observableArrayList(arrYears));
+    // yAxis = new NumberAxis("Yearly Obects Launched", 0.0d, 150.0d, 50.0d);
+    // ArrayList<BarChart.Series> series = new ArrayList<BarChart.Series>();
+
+    // for (Map.Entry<String, ArrayList<SpaceItem>> set :
+    // countrySpaceItems.entrySet()) {
+    // String country = set.getKey();
+    // ArrayList<SpaceItem> items = set.getValue();
+    // ArrayList<BarChart.Data> data = new ArrayList<BarChart.Data>();
+
+    // for (SpaceItem item : items) {
+    // data.add(new BarChart.Data(item.getYear(), item.getYearlyLaunches()));
+
+    // }
+    // series.add(new BarChart.Series(country,
+    // FXCollections.observableArrayList(data)));
+
+    // }
+
+    // ObservableList<BarChart.Series> barChartData =
+    // FXCollections.observableArrayList(series);
+
+    // // new BarChart.Series("", FXCollections.observableArrayList(
+    // // new BarChart.Data(arrYears[0], 567d),
+    // // new BarChart.Data(arrYears[1], 1292d),
+    // // new BarChart.Data(arrYears[2], 1292d))),
+    // // new BarChart.Series("Lemons", FXCollections.observableArrayList(
+    // // new BarChart.Data(arrYears[0], 956),
+    // // new BarChart.Data(arrYears[1], 1665),
+    // // new BarChart.Data(arrYears[2], 2559))),
+    // // new BarChart.Series("Oranges", FXCollections.observableArrayList(
+    // // new BarChart.Data(arrYears[0], 1154),
+    // // new BarChart.Data(arrYears[1], 1927),
+    // // new BarChart.Data(arrYears[2], 2774))));
+
+    // chart = new BarChart(xAxis, yAxis, barChartData, 25.0d);
     VBox vbox = new VBox();
     HBox hbox = new HBox();
 
@@ -102,12 +136,18 @@ public class BarChartApp extends Application {
 
     hbox.setPadding(new Insets(10, 10, 10, 10));
     vbox.setSpacing(10);
-    hbox.setSpacing(10);
+    hbox.setSpacing(50);
     CheckBox cb1 = new CheckBox("All Countries");
     ChoiceBox dropdown = new ChoiceBox();
 
+    dropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+        countrySelected((String) dropdown.getItems().get((Integer) number2));
+
+      }
+    });
     dropdown.getItems().addAll(m.getUniqueCountries());
-    // ObservableList list = root.getChildren();
 
     hbox.getChildren().addAll(cb1, dropdown);
     vbox.getChildren().addAll(hbox, chart);

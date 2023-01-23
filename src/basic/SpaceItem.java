@@ -1,10 +1,10 @@
 package basic;
 
 public class SpaceItem {
-    String entity;
-    String conCode;
-    String year;
-    int yearlyLaunches;
+    private String entity;
+    private String conCode;
+    private String year;
+    private int yearlyLaunches;
 
     public String getEntity() {
         return entity;
