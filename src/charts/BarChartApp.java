@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import basic.DataLoader;
-import basic.SpaceItem;
+import basic.WorkingItem;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -38,22 +38,21 @@ public class BarChartApp extends Application {
   ArrayList<String> years;
   DataLoader dataLoader = new DataLoader();
   
-  HashMap<String, ArrayList<SpaceItem>> countrySpaceItems =  dataLoader.getCountrySpaceItems();
+  HashMap<String, ArrayList<WorkingItem>> countrySpaceItems =  dataLoader.getCountrySpaceItems();
   //ArrayList<String> countriestoBeDisplayed = new ArrayList<String>();
   ArrayList<String> countriestoBeDisplayed = dataLoader.getUniqueCountries();
 
  public void refreshBarData() {
   BarChart.Series<String,Float> series = new BarChart.Series<>();
-  for (Map.Entry<String, ArrayList<SpaceItem>> set : countrySpaceItems.entrySet()) {
+  for (Map.Entry<String, ArrayList<WorkingItem>> set : countrySpaceItems.entrySet()) {
     String country = set.getKey();
     if (!countriestoBeDisplayed.contains(country)) {
       continue;
     }
-    ArrayList<SpaceItem> items = set.getValue();
-    //ArrayList<BarChart.Data> data = new ArrayList<BarChart.Data>();
+    ArrayList<WorkingItem> items = set.getValue();
 
-    for (SpaceItem item : items) {
-      series.getData().add(new BarChart.Data(item.getYear(), item.getYearlyLaunches())); 
+    for (WorkingItem item : items) {
+      series.getData().add(new BarChart.Data(item.getYear(), item.getYearlyHours())); 
     }
     //series.add(new BarChart.Series(country, FXCollections.observableArrayList(data)));
 
@@ -68,8 +67,9 @@ public class BarChartApp extends Application {
     System.arraycopy(years.toArray(), 0, arrYears, 0, n);
 
     xAxis = new CategoryAxis();
+    xAxis.setLabel("Years (2000 - 2017)");
     xAxis.setCategories(FXCollections.<String>observableArrayList(arrYears));
-    yAxis = new NumberAxis("Yearly Obects Launched", 0.0d, 150.0d, 50.0d);
+    yAxis = new NumberAxis("Working Hours", 0.0d, 2500.0d, 1000.0d);
     chart = new BarChart(xAxis,yAxis); 
     refreshBarData();
   }
@@ -82,7 +82,7 @@ public class BarChartApp extends Application {
     refreshBarData();
   }
 
-  public void setCountrySpaceItems(HashMap<String, ArrayList<SpaceItem>> countrySpaceItems) {
+  public void setCountrySpaceItems(HashMap<String, ArrayList<WorkingItem>> countrySpaceItems) {
     this.countrySpaceItems = countrySpaceItems;
   }
 
@@ -154,11 +154,10 @@ public class BarChartApp extends Application {
   public void start(Stage primaryStage) throws Exception {
     dataLoader.csvConvert();
     countrySpaceItems =  dataLoader.getCountrySpaceItems();
-    //ArrayList<String> countriestoBeDisplayed = new ArrayList<String>();
     countriestoBeDisplayed = dataLoader.getUniqueCountries();
     Scene scene = new Scene(createContent(), 900, 600);
+    primaryStage.setTitle("Annual Working Hours Global");
     primaryStage.setScene(scene);
-  //  primaryStage.setScene(new Scene(createContent(), 900, 600));
     primaryStage.show();
   }
 
