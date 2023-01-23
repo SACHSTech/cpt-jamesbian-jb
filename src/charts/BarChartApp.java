@@ -108,8 +108,20 @@ public class BarChartApp extends Application {
     hbox.setPadding(new Insets(10, 10, 10, 10));
     vbox.setSpacing(10);
     hbox.setSpacing(50);
-    CheckBox cb1 = new CheckBox("All Countries");
+    CheckBox cbAll = new CheckBox("All Countries");
     ChoiceBox dropdown = new ChoiceBox();
+
+    cbAll.selectedProperty().addListener(
+      (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+        if (new_val) {
+          System.out.println("All countries checked: ");
+          countriestoBeDisplayed.clear();
+          countriestoBeDisplayed = (dataLoader.getUniqueCountries());
+          chart.getData().clear();
+          refreshBarData();
+        }
+      });
+      
 
     dropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
       @Override
@@ -130,7 +142,7 @@ public class BarChartApp extends Application {
     });
     dropdown.getItems().addAll(dataLoader.getUniqueCountries());
 
-    hbox.getChildren().addAll(cb1, dropdown);
+    hbox.getChildren().addAll(cbAll, dropdown);
     vbox.getChildren().addAll(hbox, chart);
   
 
