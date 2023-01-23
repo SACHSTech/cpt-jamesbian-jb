@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -58,66 +59,12 @@ public class DataLoader {
     public ArrayList<String> getUniqueCountries() {
         Set<String> countrySet = countrySpaceItems.keySet();
         ArrayList<String> countryList = new ArrayList<String>(countrySet);
-        Collections.sort(countryList);
+        MergeSort.mergeSort(countryList);
+        String [] sorted = MergeSort.mergeSort(countryList);
+        countryList = new ArrayList<String>(Arrays.asList(sorted));
+
         return countryList;
     }
-
-//     // Merge Sort Algorithim
-//     public static void mergeSort(ArrayList<String> yearList) {
-//         ArrayList<String> temp = new ArrayList<String>(yearList);
-//         mergeSortCalc(yearList, 0, yearList, temp);
-
-//     }
-
-//     private static void mergeCalc(ArrayList<String> yearList, int from, int to, ArrayList<String> temp) {
-//         // If the array length is greater than 1
-//         if (to - from >= 1) {
-//             int mid = (from + to) / 2; // split the list in half
-//             mergeCalc(yearList, from, mid, temp); // mergesort the first half
-//             mergeCalc(yearList, mid + 1, to, temp); // mergesort the second half
-//             merge(yearList, from, mid, to, temp); // merge
-//         }
-//     }
-
-//     private static void merge(ArrayList<String> yearList, int from, int mid, int to, ArrayList<String> temp) {
-//         int i = from; // track left array position
-//         int j = mid + 1; // track right array position
-//         int k = from; // track temp position
-
-//         while (i <= mid && j <= to) {
-//             // If the element in the left subarray is less
-//             // than the element in the right subarray it
-//             // is next in the merged list
-//             if (arr[i] < arr[j]) {
-//                 temp[k] = arr[i];
-//                 i++;
-//             } else {
-//                 temp[k] = arr[j];
-//                 j++;
-//             }
-//             k++;
-//         }
-
-//         // We may left over elements from either list
-//         while (i <= mid) {
-//             temp[k] = arr[i];
-//             i++;
-//             k++;
-//         }
-
-//         while (j <= to) {
-//             temp[k] = arr[j];
-//             j++;
-//             k++;
-//         }
-
-//         // Copy over elements from temp to arr
-//         for (k = from; k <= to; k++) {
-//             arr[k] = temp[k];
-//         }
-//     }
-
-//  }
 
     // Gets Information from workingHours.csv; while fills an ArrayList of
     // workingItems while the next line is not null
@@ -150,6 +97,8 @@ public class DataLoader {
         }
         br.close();
         yearList = new ArrayList<String>(yearSet);
-        Collections.sort(yearList);
+        String [] sorted = MergeSort.mergeSort(yearList);
+        yearList = new ArrayList<String>(Arrays.asList(sorted));
+
     }
 }
