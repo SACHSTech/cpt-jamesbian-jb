@@ -12,16 +12,18 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -33,6 +35,7 @@ import javafx.stage.Stage;
  */
 public class BarChartApp extends Application {
   private BarChart<String,Float> chart;
+  private LineChart<String,Float> lineChart;
   private CategoryAxis xAxis;
   private NumberAxis yAxis;
   ArrayList<String> years;
@@ -54,7 +57,6 @@ public class BarChartApp extends Application {
     for (WorkingItem item : items) {
       series.getData().add(new BarChart.Data(item.getYear(), item.getYearlyHours())); 
     }
-    //series.add(new BarChart.Series(country, FXCollections.observableArrayList(data)));
 
   }
   chart.getData().add(series);
@@ -74,6 +76,37 @@ public class BarChartApp extends Application {
     refreshBarData();
   }
 
+  public void makeLine() {
+    int n = this.years.size();
+    String arrYears[] = new String[n];
+    System.arraycopy(years.toArray(), 0, arrYears, 0, n);
+
+    xAxis = new CategoryAxis();
+    xAxis.setLabel("Years (2000 - 2017)");
+    xAxis.setCategories(FXCollections.<String>observableArrayList(arrYears));
+    yAxis = new NumberAxis("Working Hours", 0.0d, 2500.0d, 1000.0d);
+    lineChart = new LineChart(xAxis,yAxis); 
+    refreshLineData();
+  }
+
+  public void refreshLineData() {
+    LineChart.Series<String,Float> series = new LineChart.Series<>();
+    for (Map.Entry<String, ArrayList<WorkingItem>> set : countrySpaceItems.entrySet()) {
+      String country = set.getKey();
+      if (!countriestoBeDisplayed.contains(country)) {
+        continue;
+      }
+      ArrayList<WorkingItem> items = set.getValue();
+  
+      for (WorkingItem item : items) {
+        series.getData().add(new LineChart.Data(item.getYear(), item.getYearlyHours())); 
+      }
+  
+    }
+    lineChart.getData().add(series);
+  
+   }
+
   public void countrySelected(String countryName) throws InterruptedException, IOException {
     System.out.println("country selected: " + countryName);
     countriestoBeDisplayed.clear();
@@ -82,13 +115,19 @@ public class BarChartApp extends Application {
     refreshBarData();
   }
 
+  public void countrySelectedLine(String countryName) throws InterruptedException, IOException {
+    System.out.println("country selected: " + countryName);
+    countriestoBeDisplayed.clear();
+    countriestoBeDisplayed.add(countryName);
+    lineChart.getData().clear();
+    refreshLineData();
+  }
+
   public void setCountrySpaceItems(HashMap<String, ArrayList<WorkingItem>> countrySpaceItems) {
     this.countrySpaceItems = countrySpaceItems;
   }
 
-  public Parent createContent() throws IOException {
-    Group root = new Group();
-    //.csvConvert();
+  public Parent createContent() throws IOException {;
     countrySpaceItems = dataLoader.getCountrySpaceItems();
     years = dataLoader.getYearList();
     int n = this.years.size();
@@ -99,8 +138,10 @@ public class BarChartApp extends Application {
     //countriestoBeDisplayed = m.getUniqueCountries();
 
      makeBar();
+     makeLine();
     
-
+    
+    TabPane tabPane = new TabPane();
     VBox vbox = new VBox();
     HBox hbox = new HBox();
     vbox.setMaxSize(900, 600);
@@ -108,45 +149,67 @@ public class BarChartApp extends Application {
     hbox.setPadding(new Insets(10, 10, 10, 10));
     vbox.setSpacing(10);
     hbox.setSpacing(50);
-    CheckBox cbAll = new CheckBox("All Countries");
     ChoiceBox dropdown = new ChoiceBox();
-
-    cbAll.selectedProperty().addListener(
-      (ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-        if (new_val) {
-          System.out.println("All countries checked: ");
-          countriestoBeDisplayed.clear();
-          countriestoBeDisplayed = (dataLoader.getUniqueCountries());
-          chart.getData().clear();
-          refreshBarData();
-        }
-      });
       
 
     dropdown.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
       @Override
       public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
-        try {
-          try {
-            countrySelected((String) dropdown.getItems().get((Integer) number2));
-          } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-        } catch (InterruptedException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
+
+            try {
+              countrySelected((String) dropdown.getItems().get((Integer) number2));
+            } catch (InterruptedException | IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
 
       }
     });
     dropdown.getItems().addAll(dataLoader.getUniqueCountries());
+    
 
-    hbox.getChildren().addAll(cbAll, dropdown);
+    hbox.getChildren().addAll(new Label("Choose a Country"), dropdown);
     vbox.getChildren().addAll(hbox, chart);
-  
+    VBox vboxLineChart = new VBox();
+    HBox hboxLineChart = new HBox();
+    
+    Tab tab1 = new Tab("BarChart",vbox);
 
-    return vbox;
+    ChoiceBox dropdownLine = new ChoiceBox();
+    dropdownLine.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+      @Override
+      public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2) {
+
+            try {
+              countrySelectedLine((String) dropdownLine.getItems().get((Integer) number2));
+            } catch (InterruptedException | IOException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+
+      }
+    });
+    ArrayList<String> countries = dataLoader.getUniqueCountries();
+    dropdownLine.getItems().addAll(countries);
+    
+    dropdownLine.setValue(countries.get(0));
+    dropdown.setValue(countries.get(0));
+    
+    
+    vboxLineChart.setMaxSize(900, 600);
+    lineChart.setMaxSize(880, 560);
+    hboxLineChart.setPadding(new Insets(10, 10, 10, 10));
+    vboxLineChart.setSpacing(10);
+    hboxLineChart.setSpacing(50);
+    hboxLineChart.getChildren().addAll(new Label ("Choose a Country"),dropdownLine,lineChart);
+    vboxLineChart.getChildren().addAll(hboxLineChart, lineChart);
+    Tab tab2 = new Tab("LineChart"  , vboxLineChart);
+    tabPane.getTabs().add(tab1);
+    tabPane.getTabs().add(tab2);
+
+
+
+    return tabPane;
 
   }
 
