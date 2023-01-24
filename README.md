@@ -16,6 +16,4 @@ Part 2 (Accidentally closed VS code)
 
 ### Demo Video
 
-<https://watch.screencastify.com/v/tidyZqNURQf6855Pas0l>
-
-
+<https://watch.screencastify.com/v/Y4gK7zSQOQhuB9humo9n>

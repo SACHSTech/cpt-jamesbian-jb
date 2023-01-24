@@ -32,15 +32,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * MergeSort algorithm
+ * Chart animator for JavaFx
  * 
- * @param yearList          ArrayList that returns set of unique years
- * @param countrySpaceItems HashMap that uses country as the key
- * @param output            The return value of MergeSort
- * @param years             Empty string array that is filled
- * @param from              Low value
- * @param mid               Mid value
- * @param to                High value
+ * @param chart                Barchart variable
+ * @param linechart            Linechart variable
+ * @param countriesDisplaying  ArrayList of unique country names
+ * @param countrySpaceItems    Hashmap 
+ * @param item                 fetches values
  * @author J.Bian
  */
 
@@ -53,13 +51,13 @@ public class BarChartApp extends Application {
   DataLoader dataLoader = new DataLoader();
 
   HashMap<String, ArrayList<WorkingItem>> countrySpaceItems = dataLoader.getCountrySpaceItems();
-  ArrayList<String> countriestoBeDisplayed = dataLoader.getUniqueCountries();
+  ArrayList<String> countriesDisplaying = dataLoader.getUniqueCountries();
 
   public void refreshBarData() {
     BarChart.Series<String, Float> series = new BarChart.Series<>();
     for (Map.Entry<String, ArrayList<WorkingItem>> set : countrySpaceItems.entrySet()) {
       String country = set.getKey();
-      if (!countriestoBeDisplayed.contains(country)) {
+      if (!countriesDisplaying.contains(country)) {
         continue;
       }
       ArrayList<WorkingItem> items = set.getValue();
@@ -103,7 +101,7 @@ public class BarChartApp extends Application {
     LineChart.Series<String, Float> series = new LineChart.Series<>();
     for (Map.Entry<String, ArrayList<WorkingItem>> set : countrySpaceItems.entrySet()) {
       String country = set.getKey();
-      if (!countriestoBeDisplayed.contains(country)) {
+      if (!countriesDisplaying.contains(country)) {
         continue;
       }
       ArrayList<WorkingItem> items = set.getValue();
@@ -119,16 +117,16 @@ public class BarChartApp extends Application {
 
   public void countrySelected(String countryName) throws InterruptedException, IOException {
     System.out.println("country selected: " + countryName);
-    countriestoBeDisplayed.clear();
-    countriestoBeDisplayed.add(countryName);
+    countriesDisplaying.clear();
+    countriesDisplaying.add(countryName);
     chart.getData().clear();
     refreshBarData();
   }
 
   public void countrySelectedLine(String countryName) throws InterruptedException, IOException {
     System.out.println("country selected: " + countryName);
-    countriestoBeDisplayed.clear();
-    countriestoBeDisplayed.add(countryName);
+    countriesDisplaying.clear();
+    countriesDisplaying.add(countryName);
     lineChart.getData().clear();
     refreshLineData();
   }
@@ -235,7 +233,7 @@ public class BarChartApp extends Application {
   public void start(Stage primaryStage) throws Exception {
     dataLoader.csvConvert();
     countrySpaceItems = dataLoader.getCountrySpaceItems();
-    countriestoBeDisplayed = dataLoader.getUniqueCountries();
+    countriesDisplaying = dataLoader.getUniqueCountries();
     Scene scene = new Scene(createContent(), 900, 600);
     primaryStage.setTitle("Annual Working Hours Global");
     primaryStage.setScene(scene);

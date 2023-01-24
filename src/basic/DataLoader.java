@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Turns Csv file into HashMap, and sorts
+ * Turns Csv file into HashMap, and sorts into usable information
  * 
  * @param delimiter         splits string into tokens
  * @param yearList          ArrayList that returns set of unique years
