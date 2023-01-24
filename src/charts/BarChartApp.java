@@ -187,7 +187,7 @@ public class BarChartApp extends Application {
     };
     btnSearch.setOnAction(event);
 
-    hbox.getChildren().addAll(new Label("Choose a Country"), dropdown, findCountry, btnSearch);
+    hbox.getChildren().addAll(new Label("Choose a Country: "), dropdown, findCountry, btnSearch);
     vbox.getChildren().addAll(hbox, chart);
     VBox vboxLineChart = new VBox();
     HBox hboxLineChart = new HBox();
