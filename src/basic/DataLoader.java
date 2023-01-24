@@ -60,12 +60,13 @@ public class DataLoader {
         Set<String> countrySet = countrySpaceItems.keySet();
         ArrayList<String> countryList = new ArrayList<String>(countrySet);
         MergeSort.mergeSort(countryList);
-        String [] sorted = MergeSort.mergeSort(countryList);
+        String[] sorted = MergeSort.mergeSort(countryList);
         countryList = new ArrayList<String>(Arrays.asList(sorted));
 
         return countryList;
     }
 
+    // Encapsulation of Conversion
     // Gets Information from workingHours.csv; while fills an ArrayList of
     // workingItems while the next line is not null
     public void csvConvert() throws IOException {
@@ -97,7 +98,7 @@ public class DataLoader {
         }
         br.close();
         yearList = new ArrayList<String>(yearSet);
-        String [] sorted = MergeSort.mergeSort(yearList);
+        String[] sorted = MergeSort.mergeSort(yearList);
         yearList = new ArrayList<String>(Arrays.asList(sorted));
 
     }

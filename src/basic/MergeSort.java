@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MergeSort {
-    public static String [] mergeSort(ArrayList<String> yearList) {
-        String [] output = new String[yearList.size()]; 
-        String [] years = new String[yearList.size()];  
+    public static String[] mergeSort(ArrayList<String> yearList) {
+        String[] output = new String[yearList.size()];
+        String[] years = new String[yearList.size()];
         years = yearList.toArray(years);
         mergeCalc(years, 0, years.length - 1, output);
-        
-        
+
         return output;
 
     }
@@ -37,8 +36,7 @@ public class MergeSort {
             if (years[i].compareTo(years[j]) < 0) {
                 temp[k] = years[i];
                 i++;
-            }
-            else {
+            } else {
                 temp[k] = years[j];
                 j++;
             }
@@ -65,10 +63,8 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        String [] stringSearch = {"hi", "flag", "bye", "pie"};
+        String[] stringSearch = { "hi", "flag", "bye", "pie" };
         ArrayList<String> stringArr = new ArrayList<String>(Arrays.asList(stringSearch));
         MergeSort.mergeSort(stringArr);
     }
- }
-    
-
+}
