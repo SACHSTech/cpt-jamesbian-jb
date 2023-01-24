@@ -6,10 +6,16 @@ The data selected for this CPT is the average hours of work done by each country
 
 <https://ourworldindata.org/working-hours>
 
-### Demo Video
-
-link
-
 ### Course Connection Video
 
-link
+Part 1
+<https://watch.screencastify.com/v/vhS09tN8qJpU9swBOal4>
+
+Part 2 (Accidentally closed VS code)
+<https://watch.screencastify.com/v/mj3UWaMTjmmTFBFQ0OXi>
+
+### Demo Video
+
+<https://watch.screencastify.com/v/tidyZqNURQf6855Pas0l>
+
+

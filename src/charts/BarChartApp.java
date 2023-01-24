@@ -32,10 +32,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * A chart that displays rectangular bars with heights indicating data values
- * for categories. Used for displaying information when at least one axis has
- * discontinuous or discrete data.
+ * MergeSort algorithm
+ * 
+ * @param yearList          ArrayList that returns set of unique years
+ * @param countrySpaceItems HashMap that uses country as the key
+ * @param output            The return value of MergeSort
+ * @param years             Empty string array that is filled
+ * @param from              Low value
+ * @param mid               Mid value
+ * @param to                High value
+ * @author J.Bian
  */
+
 public class BarChartApp extends Application {
   private BarChart<String, Float> chart;
   private LineChart<String, Float> lineChart;
