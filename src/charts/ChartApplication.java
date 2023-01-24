@@ -32,7 +32,7 @@ import javafx.stage.Stage;
  * for categories. Used for displaying information when at least one axis has
  * discontinuous or discrete data.
  */
-public class BarChartApp extends Application {
+public class ChartApplication extends Application {
   private BarChart<String, Float> chart;
   private LineChart<String, Float> lineChart;
   private CategoryAxis xAxis;

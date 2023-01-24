@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * MergeSort algorithm
  * 
- * @param yearList          ArrayList that returns set of unique years 
+ * @param yearList          ArrayList that returns set of unique years
  * @param countrySpaceItems HashMap that uses country as the key
  * @param output            The return value of MergeSort
  * @param years             Empty string array that is filled
