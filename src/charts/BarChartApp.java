@@ -19,7 +19,6 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -42,7 +41,6 @@ public class BarChartApp extends Application {
   DataLoader dataLoader = new DataLoader();
 
   HashMap<String, ArrayList<WorkingItem>> countrySpaceItems = dataLoader.getCountrySpaceItems();
-  // ArrayList<String> countriestoBeDisplayed = new ArrayList<String>();
   ArrayList<String> countriestoBeDisplayed = dataLoader.getUniqueCountries();
 
   public void refreshBarData() {

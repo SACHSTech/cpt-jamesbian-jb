@@ -1,5 +1,15 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-c66648af7eb3fe8bc4f294546bfd86ef473780cde1dea487d3c4ff354943c9ae.svg)](https://classroom.github.com/online_ide?assignment_repo_id=9701690&assignment_repo_type=AssignmentRepo)
-# ICS4U CPT (Edit this)
+# ICS4U CPT: Annual Working Hours
 
-* Place your project README details here
-* Check the [VS Code, Java, and JavaFX Install and Set Up](https://docs.google.com/document/d/1s5oTmY8A8TDZu303p_DaH6CEAcC9xL8-aNX-pAxCcps/edit?usp=sharing) doc for set up and getting started instructions.
+    The data selected for this CPT is the average hours of work done by each country over an entire year. The data aims to show the trend of human work as time moves on. I chose this data to graph because it gives an interesting persepctive on technology. Recently, Atlas, a humanoid robot, was showcased to have extremely flexible capabilites, and was featured in a construction video to show how Atlas can replace human labour. The graphs show that the time humans spend working is much less than before, and it is likely because of these new inventions that keep adapting. Working Hours is a good way to show how much the average schedule of humans have changed over even the past few years.
+
+## Data Source
+
+<https://ourworldindata.org/working-hours>
+
+### Demo Video
+
+link
+
+### Course Connection Video
+
+link
