@@ -12,6 +12,8 @@ import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,10 +21,12 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,7 +36,7 @@ import javafx.stage.Stage;
  * for categories. Used for displaying information when at least one axis has
  * discontinuous or discrete data.
  */
-public class ChartApplication extends Application {
+public class BarChartApp extends Application {
   private BarChart<String, Float> chart;
   private LineChart<String, Float> lineChart;
   private CategoryAxis xAxis;
@@ -142,6 +146,8 @@ public class ChartApplication extends Application {
     TabPane tabPane = new TabPane();
     VBox vbox = new VBox();
     HBox hbox = new HBox();
+    TextField findCountry = new TextField();
+    Button btnSearch = new Button("Search");
     vbox.setMaxSize(900, 600);
     chart.setMaxSize(880, 560);
     hbox.setPadding(new Insets(10, 10, 10, 10));
@@ -164,7 +170,18 @@ public class ChartApplication extends Application {
     });
     dropdown.getItems().addAll(dataLoader.getUniqueCountries());
 
-    hbox.getChildren().addAll(new Label("Choose a Country"), dropdown);
+    EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent e) {
+        ArrayList<String> countries = dataLoader.getUniqueCountries();
+        int countryIndex = dataLoader.findCountry(findCountry.getText());
+        if (countryIndex >= 0) {
+          dropdown.setValue(countries.get(countryIndex));
+        }
+      }
+    };
+    btnSearch.setOnAction(event);
+
+    hbox.getChildren().addAll(new Label("Choose a Country"), dropdown, findCountry, btnSearch);
     vbox.getChildren().addAll(hbox, chart);
     VBox vboxLineChart = new VBox();
     HBox hboxLineChart = new HBox();

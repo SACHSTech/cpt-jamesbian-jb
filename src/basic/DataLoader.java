@@ -36,6 +36,7 @@ public class DataLoader {
     // Global Variables
     public static final String delimiter = ",";
     ArrayList<String> yearList = new ArrayList<String>();
+    ArrayList<String> countryList = new ArrayList<String>();
     HashMap<String, ArrayList<WorkingItem>> countrySpaceItems = new HashMap<String, ArrayList<WorkingItem>>();
 
     // Getter & Setter Methods
@@ -55,10 +56,14 @@ public class DataLoader {
         this.countrySpaceItems = countrySpaceItems;
     }
 
+    public int findCountry(String country) {
+        return countryList.indexOf(country);
+    }
+
     // Converts Set into ArrayList
     public ArrayList<String> getUniqueCountries() {
         Set<String> countrySet = countrySpaceItems.keySet();
-        ArrayList<String> countryList = new ArrayList<String>(countrySet);
+        countryList = new ArrayList<String>(countrySet);
         MergeSort.mergeSort(countryList);
         String[] sorted = MergeSort.mergeSort(countryList);
         countryList = new ArrayList<String>(Arrays.asList(sorted));
