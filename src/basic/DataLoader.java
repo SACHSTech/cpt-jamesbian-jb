@@ -14,20 +14,9 @@ import java.util.Set;
 
 /**
  * Turns Csv file into HashMap, and sorts into usable information
- * 
- * @param delimiter         splits string into tokens
- * @param yearList          ArrayList that returns set of unique years
+ *
  * @param countrySpaceItems HashMap that uses country as the key
- * @param countrySet        Converts the key of countrySpaceItems into a Set
- * @param countryList       Converts Set back into ArrayList for bar chart
  * @param yearSet           Set of unique country names
- * @param country           Holds country value of each WorkingItem to be put in
- *                          ArrayList
- * @param fileColCount      Counter for file column used to skip first column
- * @param file              Location of csv. file
- * @param fr                DataLoader Filereader
- * @param br                DataLoader Bufferedreader
- * @param line              Used while file does not contain " "
  * @author J.Bian
  */
 

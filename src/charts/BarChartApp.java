@@ -34,11 +34,12 @@ import javafx.stage.Stage;
 /**
  * Chart animator for JavaFx
  * 
- * @param chart                Barchart variable
+ * @param country               Barchart variable
  * @param linechart            Linechart variable
  * @param countriesDisplaying  ArrayList of unique country names
  * @param countrySpaceItems    Hashmap 
  * @param item                 fetches values
+ * @param pimaryStage          JavaFx visual stage
  * @author J.Bian
  */
 
